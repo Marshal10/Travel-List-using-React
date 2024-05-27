@@ -3,6 +3,7 @@ export default function App() {
     <div className="App">
       <Logo />
       <Form />
+      <PackingList />
     </div>
   );
 }
@@ -29,5 +30,27 @@ function Form() {
       <input type="text" placeholder="Item"></input>
       <button>Add</button>
     </form>
+  );
+}
+
+function PackingList() {
+  return (
+    <div className="list">
+      <ul>
+        <li>
+          <input type="checkbox"></input>
+          <span>Item Qty Item Name</span>
+          <button>❌</button>
+        </li>
+      </ul>
+      <div className="actions">
+        <select>
+          <option value="input">Sort by input order</option>
+          <option value="description">Sort by description</option>
+          <option value="packed">Sort by packed status</option>
+        </select>
+        <button>Clear List</button>
+      </div>
+    </div>
   );
 }
