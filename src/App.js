@@ -7,11 +7,27 @@ export default function App() {
     setItems((i) => [...i, item]);
   }
 
+  function handleCheckboxToggle(id) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
+  }
+
+  function handleDeleteItem(id) {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form addNewItem={handleNewItem} />
-      <PackingList items={items} />
+      <PackingList
+        items={items}
+        togglePacked={handleCheckboxToggle}
+        deleteItem={handleDeleteItem}
+      />
       <Statistics />
     </div>
   );
@@ -34,7 +50,7 @@ function Form({ addNewItem }) {
 
     if (!description) return;
 
-    const newItem = { description, qty, packed: "false", id: Date.now() };
+    const newItem = { description, qty, packed: false, id: Date.now() };
     addNewItem(newItem);
 
     setDescription("");
@@ -62,18 +78,16 @@ function Form({ addNewItem }) {
   );
 }
 
-function PackingList({ items }) {
+function PackingList({ items, togglePacked, deleteItem }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <li key={item.id}>
-            <input type="checkbox"></input>
-            <span>
-              {item.qty} {item.description}
-            </span>
-            <button>❌</button>
-          </li>
+          <Item
+            item={item}
+            togglePacked={togglePacked}
+            deleteItem={deleteItem}
+          />
         ))}
       </ul>
       <div className="actions">
@@ -85,6 +99,22 @@ function PackingList({ items }) {
         <button>Clear List</button>
       </div>
     </div>
+  );
+}
+
+function Item({ item, togglePacked, deleteItem }) {
+  return (
+    <li key={item.id}>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => togglePacked(item.id)}
+      ></input>
+      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
+        {item.qty} {item.description}
+      </span>
+      <button onClick={() => deleteItem(item.id)}>❌</button>
+    </li>
   );
 }
 
