@@ -4,6 +4,7 @@ export default function App() {
       <Logo />
       <Form />
       <PackingList />
+      <Statistics />
     </div>
   );
 }
@@ -52,5 +53,13 @@ function PackingList() {
         <button>Clear List</button>
       </div>
     </div>
+  );
+}
+
+function Statistics() {
+  return (
+    <footer className="stats">
+      <em>You have X items on your list,and you have already packed X (X%)</em>
+    </footer>
   );
 }
