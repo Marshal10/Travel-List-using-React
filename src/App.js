@@ -33,7 +33,7 @@ function Form() {
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Item"></input>
+      <input type="text" placeholder="Item..."></input>
       <button>Add</button>
     </form>
   );
